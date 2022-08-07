@@ -5,12 +5,37 @@ import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 public class DutchNationalFlag {
   public enum Color { RED, WHITE, BLUE }
 
+  /**
+   * Logic : Run program in two passes. First pass to club all smaller elements at the beginning of the list. 
+   * Second pass to club all larger elements on the right side, starting from the end of the list. 
+   * @param pivotIndex
+   * @param A
+   */
   public static void dutchFlagPartition(int pivotIndex, List<Color> A) {
     // TODO - you fill in here.
+	System.out.println(A);
+	
+	
+	int pivotValue = A.get(pivotIndex).ordinal();
+	int start = 0;
+	for(int i=0;i<A.size();i++) {
+		if(A.get(i).ordinal() < pivotValue) {
+			Collections.swap(A, start++, i);
+		}
+	}
+	System.out.println("After First " + A);
+	int end =A.size()-1;
+	for(int i=end;i>=0;i--) {
+		if(A.get(i).ordinal() > pivotValue) {
+			Collections.swap(A, end--, i);
+		}
+	}
+	System.out.println(A);
     return;
   }
   @EpiTest(testDataFile = "dutch_national_flag.tsv")
